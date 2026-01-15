@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - EventHub</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body class="auth-page">
+  <!-- Top Navigation -->
+  <nav class="top-nav public-nav">
+    <div class="nav-left">
+      <a href="/" class="logo">
+        <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+          <path d="M12 20L18 26L28 14" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <defs>
+            <linearGradient id="gradient" x1="0" y1="0" x2="40" y2="40">
+              <stop stop-color="#6366f1" />
+              <stop offset="1" stop-color="#8b5cf6" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <span>EventHub</span>
+      </a>
+    </div>
+    <div class="nav-right">
+      <a href="/" class="nav-link">Browse Events</a>
+      <a href="/signin/" class="btn-secondary">Sign In</a>
+    </div>
+  </nav>
+
+  <!-- Auth Container -->
+  <div class="auth-container">
+    <div class="auth-card">
+      <h2>Create Account</h2>
+      <p class="subtitle">Join EventHub </p>
+
+      <form method="POST" action="/signup/" class="auth-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter your name" required minlength="2">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Min 6 characters" required minlength="6">
+        </div>
+        <button type="submit" class="btn-primary full-width">Create Account</button>
+      </form>
+
+      <p class="auth-footer">
+        Already have an account? <a href="/signin/">Sign In</a>
+      </p>
+    </div>
+  </div>
+</body>
+
+</html>

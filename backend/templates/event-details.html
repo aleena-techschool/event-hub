@@ -1,0 +1,163 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech Summit 2026 - EventHub</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body class="dashboard-page">
+  <!-- Top Navigation -->
+  <nav class="top-nav public-nav">
+    <div class="nav-left">
+      <a href="/" class="logo">
+        <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+          <rect width="40" height="40" rx="10" fill="url(#gradient)" />
+          <path d="M12 20L18 26L28 14" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <defs>
+            <linearGradient id="gradient" x1="0" y1="0" x2="40" y2="40">
+              <stop stop-color="#6366f1" />
+              <stop offset="1" stop-color="#8b5cf6" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <span>EventHub</span>
+      </a>
+    </div>
+    <div class="nav-right">
+      <a href="/" class="nav-link">Browse Events</a>
+      <a href="/login/" class="btn-secondary">Sign In</a>
+      <a href="/signup/" class="btn-primary">Sign Up</a>
+    </div>
+  </nav>
+
+  <main class="event-details-main">
+    <!-- Event Hero Image -->
+    <div class="event-hero-image">
+      <img src="{{ event.image.url }}" alt="{{ event.title }}">
+      <div class="event-hero-overlay">
+        <span class="event-type-badge large">{{ event.event_type }}</span>
+      </div>
+    </div>
+
+    <div class="event-details-content">
+      <div class="event-details-grid">
+        <!-- Main Content -->
+        <div class="event-main">
+          <a href="/" class="back-link">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+            Back to Events
+          </a>
+
+          <h1 class="event-title">{{ event.title }}</h1>
+
+          <p class="event-description">
+            {{ event.description }}
+          </p>
+
+    
+        </div>
+
+        <!-- Sidebar -->
+        <div class="event-sidebar">
+          <div class="event-info-card">
+            <h3>Event Details</h3>
+
+            <div class="event-info-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+              <div>
+                <span class="label">Date</span>
+                <span class="value">{{ event.date }}</span>
+              </div>
+            </div>
+
+            <div class="event-info-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+              <div>
+                <span class="label">Time</span>
+                <span class="value">{{ event.time }}</span>
+              </div>
+            </div>
+
+            <div class="event-info-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              <div>
+                <span class="label">Location</span>
+                <span class="value">{{ event.location }}</span>
+              </div>
+            </div>
+            <div class="event-info-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 
+             19.79 19.79 0 0 1-8.63-3.07 
+             19.5 19.5 0 0 1-6-6 
+             19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3
+             a2 2 0 0 1 2 1.72 
+             12.84 12.84 0 0 0 .7 2.81 
+             2 2 0 0 1-.45 2.11L8.09 9.91
+             a16 16 0 0 0 6 6l1.27-1.27
+             a2 2 0 0 1 2.11-.45
+             12.84 12.84 0 0 0 2.81.7
+             A2 2 0 0 1 22 16.92z" />
+              </svg>
+              <div>
+                <span class="label">Contact</span>
+                <span class="value">{{ event.contact }}</span>
+              </div>
+            </div>
+
+            <div class="event-info-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+              <div>
+                <span class="label">Attendees</span>
+                <span class="value">500+ Expected</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="event-info-card organizer-card">
+            <h3>Organizer</h3>
+            <div class="organizer-info">
+              <div class="avatar large">
+                <span>
+                  {{ event.created_by.first_name|slice:":1"|upper }}
+                  {{ event.created_by.last_name|slice:":1"|upper }}
+                </span>
+              </div>
+
+              <div>
+                <span class="organizer-name">{{ event.created_by.first_name }}</span>
+                <span class="organizer-email">{{ event.created_by.email }}</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

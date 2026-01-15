@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - EventHub</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="auth-page">
+  <!-- Top Navigation -->
+  <nav class="top-nav public-nav">
+    <div class="nav-left">
+      <a href="/" class="logo">
+        <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+          <rect width="40" height="40" rx="10" fill="url(#gradient)"/>
+          <path d="M12 20L18 26L28 14" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="gradient" x1="0" y1="0" x2="40" y2="40">
+              <stop stop-color="#6366f1"/>
+              <stop offset="1" stop-color="#8b5cf6"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span>EventHub</span>
+      </a>
+    </div>
+    <div class="nav-right">
+      <a href="/" class="nav-link">Browse Events</a>
+      <a href="/signup/" class="btn-primary">Sign Up</a>
+    </div>
+  </nav>
+
+  <!-- Auth Container -->
+  <div class="auth-container">
+    <div class="auth-card">
+      <h2>Welcome Back</h2>
+      <p class="subtitle">Sign in to continue</p>
+      
+      <!-- Login Form -->
+      <form method="POST" action="/login/" class="auth-form">
+        {% csrf_token %}
+        <!-- <div class="form-group">
+          <label for="role">Role</label>
+          <select id="role" name="role" class="form-select" required>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div> -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        </div>
+        <button type="submit" class="btn-primary full-width">Sign In</button>
+      </form>
+
+      <!-- <script>
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+          const role = document.getElementById('role').value;
+          if (role === 'admin') {
+            window.location.href = 'admin.html';
+          } else {
+            window.location.href = 'dashboard.html';
+          }
+        });
+      </script> -->
+      
+      <p class="auth-footer">
+        Don't have an account? <a href="/signup/">Sign Up</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>

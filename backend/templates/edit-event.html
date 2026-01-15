@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Event - EventHub</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body class="dashboard-page">
+
+<nav class="top-nav">
+  <div class="nav-left">
+    <a href="/" class="logo">EventHub</a>
+  </div>
+  <div class="nav-right">
+    <a href="/" class="nav-link">Browse Events</a>
+    <a href="/dashboard/" class="nav-link">My Dashboard</a>
+    <div class="user-menu">
+      <div class="avatar">
+        <span>{{ request.user.first_name|slice:":1"|upper }}</span>
+      </div>
+      <span class="user-name">{{ request.user.first_name }}</span>
+    </div>
+  </div>
+</nav>
+
+<main class="dashboard-main">
+
+<div class="dashboard-header">
+  <div>
+    <h1>Edit Event</h1>
+    <p>Update your event details</p>
+  </div>
+  <a href="/dashboard/" class="btn-secondary">Back to Dashboard</a>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h3>Event Details</h3>
+  </div>
+
+  <div class="form-container">
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label>Event Title</label>
+        <input type="text" name="title" value="{{ event.title }}" required>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea name="description" rows="4" required>{{ event.description }}</textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" name="date" value="{{ event.date|date:'Y-m-d' }}" required>
+        </div>
+        <div class="form-group">
+          <label>Time</label>
+          <input type="time" name="time" value="{{ event.time }}" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Location</label>
+          <input type="text" name="location" value="{{ event.location }}" required>
+        </div>
+        <div class="form-group">
+          <label>Event Type</label>
+          <select name="type" required>
+            {% for key, val in event.EVENT_TYPES %}
+              <option value="{{ key }}" {% if event.event_type == key %}selected{% endif %}>
+                {{ val }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Contact</label>
+        <input type="tel" name="contact" value="{{ event.contact }}" required>
+      </div>
+
+      <div class="form-group">
+        <label>Event Image</label>
+        <input type="file" name="image">
+        {% if event.image %}
+          <p>Current Image:</p>
+          <img src="{{ event.image.url }}" style="width:120px;border-radius:8px">
+        {% endif %}
+      </div>
+
+      <div class="form-actions">
+        <a href="/dashboard/" class="btn-secondary">Cancel</a>
+        <button type="submit" class="btn-primary">Update Event</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+</main>
+</body>
+</html>

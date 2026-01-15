@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - EventHub</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body class="dashboard-page admin-page">
+  <!-- Top Navigation -->
+  <nav class="top-nav admin-nav">
+    <div class="nav-left">
+      <a href="/" class="logo">
+        <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+          <rect width="40" height="40" rx="10" fill="url(#gradient)" />
+          <path d="M12 20L18 26L28 14" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <defs>
+            <linearGradient id="gradient" x1="0" y1="0" x2="40" y2="40">
+              <stop stop-color="#6366f1" />
+              <stop offset="1" stop-color="#8b5cf6" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <span>EventHub <span class="admin-badge">Admin</span></span>
+      </a>
+    </div>
+    <div class="nav-right">
+      <a href="/" class="nav-link">View Site</a>
+      <div class="user-menu">
+        <div class="avatar admin-avatar">
+          <span>{{ request.user.first_name|first|upper }}</span>
+        </div>
+        <span class="user-name">Admin</span>
+      </div>
+      <a href="/" class="btn-secondary btn-sm">Sign Out</a>
+    </div>
+  </nav>
+
+  <main class="dashboard-main">
+    <div class="dashboard-header">
+      <div>
+        <h1>Admin Dashboard</h1>
+        <p>Manage all events and users</p>
+      </div>
+      <a href="/create-event/" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
+        Create Event
+      </a>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid four-cols">
+      <div class="stat-card">
+        <div class="stat-icon total">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Total Events</span>
+          <span class="stat-value">{{ total_events }}</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon upcoming">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Upcoming</span>
+          <span class="stat-value">{{ upcoming_events }}</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon attendees">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Users</span>
+          <span class="stat-value">{{ total_users }}</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon completed">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+            <polyline points="22 4 12 14.01 9 11.01" />
+          </svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Completed</span>
+          <span class="stat-value">{{ completed_events }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- All Events Table -->
+    <div class="card">
+      <div class="card-header">
+        <h3>All Events</h3>
+      </div>
+      <div class="table-container">
+        <table class="events-table admin-table">
+          <thead>
+            <tr>
+              <th>Event</th>
+              <th>Created By</th>
+              <th>Date</th>
+              <th>Location</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for event in events %}
+            <tr>
+              <td><strong>{{ event.title }}</strong></td>
+              <td>{{ event.created_by.email }}</td>
+              <td>{{ event.date }}</td>
+              <td>{{ event.location }}</td>
+              <td>{{ event.event_type }}</td>
+
+              <td>
+                {% if event.status == "Upcoming" %}
+                <span class="status-badge upcoming">Upcoming</span>
+                {% else %}
+                <span class="status-badge completed">Completed</span>
+                {% endif %}
+
+              </td>
+
+              <td>
+                <div class="action-buttons">
+                  <a href="/event/{{ event.id }}/" class="btn-view">View</a>
+                  <a href="/admin-edit-event/{{ event.id }}/" class="btn-edit">Edit</a>
+                  <a href="/admin-delete-event/{{ event.id }}/" class="btn-delete">Delete</a>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+
+    <!-- Users Table -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Registered Users</h3>
+      </div>
+      <div class="table-container">
+        <table class="events-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Events Created</th>
+              <th>Joined</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for u in user_stats %}
+            <tr>
+              <td>{{ u.name }}</td>
+              <td>{{ u.email }}</td>
+              <td>{{ u.count }}</td>
+              <td>{{ u.joined|date:"M d, Y" }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>
