@@ -35,10 +35,11 @@ def login_view(request):
         email = request.POST["email"].strip()
         password = request.POST["password"]
 
-        if not is_valid_email(email):
-            return render(request, "signin.html", {"error": "Enter a valid email"})
-
-        user = authenticate(username=email, password=password)
+        try:
+            user_obj = User.objects.get(email=email)
+            user = authenticate(username=user_obj.username, password=password)
+        except User.DoesNotExist:
+            user = None
 
         if user:
             login(request, user)
